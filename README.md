@@ -34,8 +34,7 @@ $
 ```
 
 # CF        
-This is early version.
-Welcome our code.
+This is early version,so these code many bug, but if u have correct version of java,then it will be works good.
 
 # BUGS
     
@@ -55,7 +54,7 @@ Some other stuff.
 
 # AUTHOR
 
-NamJungGu, <nowage[at]icloud.com>
+NamJungGu, <nowage[at]gmail.com>
 
 # COPYRIGHT AND LICENSE
 
