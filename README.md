@@ -1,50 +1,53 @@
-# jaso_hap - Introduction
+# hadoop2_cluster_install_for_centos - Introduction
 
-초성/중성/종성으로 분리된 한글을 합치기                               
+This is hadoop2 cluster installer for centos.
 
 # Version
 
 v1.0.1
 
-# usage 
+# Intall hadoop2.4 with hadoop2_cluster_install_for_centos.
+step1. check yum update for all node
+    # yum update -y
+step2. download 
+    # cd 
+    # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
+    # mv hadoop2_cluster_install_for_centos  _setting
+setp3. change setting file.
+    # vi password      (All node's password will be equal.)
+    # vi host          (Use ip addresses not url or nostname.)
+step4. run install script.
+    # cd /root/_setting                         
+    # .hSetupAll.sh
+step5. check.
+```
+# .hSetupAll.sh
+            <<~ Omitted ~>>
+Found 1 items
+drwxr-xr-x   - hadoop supergroup          0 2015-03-08 18:14 /test
+----hSetup3ByHadoop.sh end---------------------------------------------------
+########################################################################
+########################################################################
+# su - hadoo
+$ 
+# Result
+```
 
-    $ perl  jaso_hap.pl "ㄱㅛㅇㅠㄱ"                                 
-    $ perl  jaso_hap.pl `cat 0.txt`                                  
-    $ perl  jaso_hap.pl `cat 0.txt`>1.txt       
-                         
-# example
-```
-[ ~/_sh]$ perl jaso_bunri.pl "핀프라
-> "
-ㅍㅣㄴㅍㅡㄹㅏ
-[ ~/_sh]$ 
-[ ~/_sh]$ perl jaso_hap.pl "ㅍㅣㄴㅍㅡㄹㅏ
-> "
-핀프라
-```
 # CF        
-
-jaso_bunri.pl은 http://mwultong.blogspot.com/2006/03/perl.html 의 내용을 수정함.
+This is early version.
+Welcome our code.
 
 # BUGS
-
+    
 Please report bugs to nowage[at]icloud.com.
 
 # todo
-아래와 같은 에러 메세지 (perl 명령어와 함께 실행하면 문제 없음.)
-```
-[ ~/_sh]$ chmod +x ./jaso*.pl
-[ ~/_sh]$ ./jaso_bunri.pl '핀프라'
-Use of the encoding pragma is deprecated at ./jaso_bunri.pl line 12.
-ㅍㅣㄴㅍㅡㄹㅏ[ ~/_sh]$ 
-[ ~/_sh]$ ./jaso_hap.pl '핀프라'
-Use of the encoding pragma is deprecated at ./jaso_hap.pl line 18.
-핀프라[ ~/_sh]$ 
-```
+
+make dynamic setting for java version, password for each node,,,
 
 # CONTRIBUTING
 
-The github repository is at https://github.com/Finfra/jaso_hap.git
+The github repository is at https://github.com/Finfra/hadoop2_cluster_install_for_centos
 
 # SEE ALSO
 
@@ -56,7 +59,4 @@ NamJungGu, <nowage[at]icloud.com>
 
 # COPYRIGHT AND LICENSE
 
-(c) Copyright 2005-2014 by finfra.com
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
+(c) Copyright 2005-2015 by finfra.com
