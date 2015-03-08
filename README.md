@@ -53,7 +53,7 @@ Some other stuff.
 
 # AUTHOR
 
-NamJungGu, <nowage[at]gmail.com>
+NamJungGu, nowage[at]gmail.com
 
 # COPYRIGHT AND LICENSE
 
