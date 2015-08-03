@@ -77,6 +77,10 @@ cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/yarn-site.xml<<EOF
     <name>yarn.resourcemanager.address</name>
     <value>s1:8040</value>
   </property>
+  <property>
+    <name>yarn.nodemanager.localizer.address</name>
+    <value>s1:10200</value>
+  </property>
 </configuration>
 EOF
 
@@ -151,6 +155,15 @@ do
 		echo "s$i">>/data/hadoop/hadoop-2.4.0/etc/hadoop/slaves
 	fi
 done
+
+if [ ! -d /data/hadoop/mapred/local ];then     
+  mkdir -p /data/hadoop/mapred/local; 
+fi
+
+if [ ! -d /data/hadoop/mapred/system ];then     
+  mkdir -p /data/hadoop/mapred/system; 
+fi
+
 
 
 

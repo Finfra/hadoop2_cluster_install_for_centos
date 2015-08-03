@@ -4,22 +4,27 @@ This is hadoop2 cluster installer for centos.
 
 # Version
 
-v1.0.1
+v1.0.2
 
 # Intall hadoop2.4 with hadoop2_cluster_install_for_centos.
-step1. check yum update for all node<br>
-    # yum update -y<br>
-step2. download <br>
-    # cd <br>
-    # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip<br>
-    # mv hadoop2_cluster_install_for_centos  _setting<br>
-setp3. change setting file.<br>
-    # vi password      (All node's password will be equal.)<br>
-    # vi host          (Use ip addresses not url or nostname.)<br>
-step4. run install script.<br>
-    # cd /root/_setting       <br>                  
-    # .hSetupAll.sh<br>
-step5. check.<br>
+step0. Preinstall
+	# yum -y install wget
+	# yum -y install  net-tools
+	# yum -y update : yum -y update && yum -y upgrade
+	# reboot
+step1. check yum update for all node
+    # yum update -y
+step2. download 
+    # cd 
+    # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
+    # mv hadoop2_cluster_install_for_centos  _setting
+setp3. change setting file.
+    # vi password      (All node's password will be equal.)
+    # vi host          (Use ip addresses, not url or nostname.)
+step4. run install script.
+    # cd /root/_setting                         
+    # .hSetupAll.sh
+step5. check.
 ```
 # .hSetupAll.sh
             <<~ Omitted ~>>
@@ -29,19 +34,22 @@ drwxr-xr-x   - hadoop supergroup          0 2015-03-08 18:14 /test
 ########################################################################
 ########################################################################
 # su - hadoo
-$ hadoop fs -ls /
+$ 
+# Result
 ```
 
 # CF        
-This is early version,so these code many bug, but if u have correct version of java,then it will be works good.
+This is early version.
+Welcome our code.
 
 # BUGS
     
-Please report bugs to nowage[at]icloud.com.
+Please report bugs to nowage[at]gmail.com.
 
 # todo
 
-make dynamic setting for java version, password for each node,,,
+password for each node,,,
+download rpm only one time when sshpass install,,,
 
 # CONTRIBUTING
 
@@ -53,7 +61,7 @@ Some other stuff.
 
 # AUTHOR
 
-NamJungGu, nowage[at]gmail.com
+NamJungGu, <nowage[at]gmail.com>
 
 # COPYRIGHT AND LICENSE
 

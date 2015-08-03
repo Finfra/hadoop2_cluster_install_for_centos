@@ -31,9 +31,8 @@ x=`rpm -qa|grep jna`
 if [ ${#x} -eq 0 ]; then
         yum -y install jna
 fi
-
-x=`cat /etc/profile|grep JAVA_HOME|grep java-1.7.0.55`
+x=`cat /etc/profile|grep JAVA_HOME|grep java-1.7.0`
 if [ ${#x} -eq 0 ]; then
-	echo 'export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64'>>/etc/profile
+    echo export JAVA_HOME=`cat /root/_setting/javaHome`>>/etc/profile
 fi
-export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64
+export JAVA_HOME=`cat /root/_setting/javaHome`

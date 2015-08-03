@@ -23,6 +23,6 @@
 x=`cat ~/.bash_profile |grep JAVA_HOME`
 # Description
 if [ ${#x} -eq 0 ]; then
-	echo 'export JAVA_HOME=/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.51.x86_64'>>~/.bashrc
+	echo export JAVA_HOME=`cat /root/_setting/javaHome`>>~/.bashrc
 fi
 . ~/.bashrc

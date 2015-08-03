@@ -52,7 +52,7 @@ userdel -r hadoop
 useradd hadoop
 cat ~/_setting/password|passwd --stdin hadoop >/tmp/null
 x=`cat ~hadoop/.bashrc|grep HADOOP_PREFIX`
-#echo $javaHome
+#echo -1---------------------------$javaHome
 if [[ ${#x} -eq 0 ]]; then
 	echo "# Hadoop"                                         >>~hadoop/.bashrc
 	echo 'export HADOOP_PREFIX="/data/hadoop/hadoop-2.4.0"' >>~hadoop/.bashrc                                               
