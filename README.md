@@ -7,24 +7,24 @@ This is hadoop2 cluster installer for centos.
 v1.0.2
 
 # Intall hadoop2.4 with hadoop2_cluster_install_for_centos.
-step0. Preinstall
+##step0. Preinstall
     # yum -y install wget
     # yum -y install  net-tools
     # yum -y update : yum -y update && yum -y upgrade
     # reboot
-step1. check yum update for all node
+##step1. check yum update for all node
     # yum update -y
-step2. download 
+##step2. download 
     # cd 
     # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
     # mv hadoop2_cluster_install_for_centos  _setting
-setp3. change setting file.
+##setp3. change setting file.
     # vi password      (All node's password will be equal.)
     # vi host          (Use ip addresses, not url or nostname.)
-step4. run install script.
+##step4. run install script.
     # cd /root/_setting                         
     # .hSetupAll.sh
-step5. check.
+##step5. check.
 ```
 # .hSetupAll.sh
             <<~ Omitted ~>>
