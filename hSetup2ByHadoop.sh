@@ -31,14 +31,14 @@ rm -rf /data/hadoop/dfs/mapred
 . .bashrc
 javaHome=`cat /root/_setting/javaHome`
 echo $javaHome
-echo "export JAVA_HOME="$javaHome>>/data/hadoop/hadoop-2.4.0/etc/hadoop/hadoop-env.sh
-echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.4.0/etc/hadoop/hadoop-env.sh
-echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.4.0/etc/hadoop/hadoop-env.sh
-echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.4.0/etc/hadoop/yarn-env.sh
-echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.4.0/etc/hadoop/yarn-env.sh
+echo "export JAVA_HOME="$javaHome>>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
+echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
+echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
+echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-env.sh
+echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-env.sh
 
 
-cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/core-site.xml<<EOF
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -53,38 +53,47 @@ cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/core-site.xml<<EOF
   </property>
 </configuration>
 EOF
-cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/yarn-site.xml<<EOF
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
-  <property>
-    <name>yarn.nodemanager.aux-services</name>
-    <value>mapreduce_shuffle</value>
-  </property>
   <property>
     <name>yarn.nodemanager.aux-services.mapreduce.shuffle.class</name>
     <value>org.apache.hadoop.mapred.ShuffleHandler</value>
   </property>
   <property>
+    <name>yarn.resourcemanager.hostname</name>
+    <value>s1</value>
+  </property>
+  <property>
     <name>yarn.resourcemanager.resource-tracker.address</name>
-    <value>s1:8025</value>
+    <value>hdfs://s1:8031</value>
   </property>
   <property>
-    <name>yarn.resourcemanager.scheduler.address</name>
-    <value>s1:8030</value>
+    <name>yarn.nodemanager.aux-services</name>
+    <value>mapreduce_shuffle</value>
   </property>
+    <property>
+        <name>yarn.log-aggregation-enable</name>
+        <value>true</value>
+    </property>
   <property>
-    <name>yarn.resourcemanager.address</name>
-    <value>s1:8040</value>
+    <name>mapreduce.jobtracker.address</name>
+    <value>s1:8021</value>
   </property>
-  <property>
-    <name>yarn.nodemanager.localizer.address</name>
-    <value>s1:10200</value>
-  </property>
+  
 </configuration>
 EOF
+# <property>
+#   <name>yarn.nodemanager.container-executor.class</name>
+#   <value>org.apache.hadoop.yarn.server.nodemanager.LinuxContainerExecutor</value>
+# </property>
 
-cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/hdfs-site.xml<<EOF
+# <property>
+#   <name>yarn.nodemanager.linux-container-executor.group</name>
+#   <value>hadoop</value>
+# </property>
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/hdfs-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -112,9 +121,13 @@ cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/hdfs-site.xml<<EOF
  </property>
 </configuration>
 EOF
+#<property>
+#   <name>yarn.nodemanager.resource.memory-mb</name>
+#   <value>8192</value>
+#</property>
 
 
-cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/mapred-site.xml<<EOF
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/mapred-site.xml<<EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -122,37 +135,40 @@ cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/mapred-site.xml<<EOF
    <name>mapreduce.framework.name</name>
    <value>yarn</value>
  </property>
- <property>
-   <name>mapred.system.dir</name>
-   <value>file:/data/hadoop/mapred/system</value>
-   <final>true</final>
- </property>
- <property>
-   <name>mapred.local.dir</name>
-   <value>file:/data/hadoop/mapred/local</value>
-   <final>true</final>
- </property>
 </configuration>
 EOF
-
-if [ -f /data/hadoop/hadoop-2.4.0/etc/hadoop/masters ];then
-	rm /data/hadoop/hadoop-2.4.0/etc/hadoop/masters
+ #  <property>
+ #   <name>mapred.child.java.opts</name>
+ #   <value>-Xmx400m</value>
+ # </property>
+ # <property>
+ #   <name>mapred.system.dir</name>
+ #   <value>file:/data/hadoop/mapred/system</value>
+ #   <final>true</final>
+ # </property>
+ # <property>
+ #   <name>mapred.local.dir</name>
+ #   <value>file:/data/hadoop/mapred/local</value>
+ #   <final>true</final>
+ # </property>
+if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/masters ];then
+	rm /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
 fi
-touch /data/hadoop/hadoop-2.4.0/etc/hadoop/masters
-cat >/data/hadoop/hadoop-2.4.0/etc/hadoop/masters<<EOF
+touch /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/masters<<EOF
 s1
 EOF
 
-if [ -f /data/hadoop/hadoop-2.4.0/etc/hadoop/slaves ];then
-	rm /data/hadoop/hadoop-2.4.0/etc/hadoop/slaves
+if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves ];then
+	rm /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 fi
-touch /data/hadoop/hadoop-2.4.0/etc/hadoop/slaves
+touch /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 hostCnt=$(grep -c ".*" /root/_setting/host)
 for i in `seq 1 $hostCnt`
 do
-	x=`cat /data/hadoop/hadoop-2.4.0/etc/hadoop/slaves|grep s$i`
+	x=`cat /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves|grep s$i`
 	if [ ${#x} -eq 0 ] ;then 
-		echo "s$i">>/data/hadoop/hadoop-2.4.0/etc/hadoop/slaves
+		echo "s$i">>/data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 	fi
 done
 

@@ -22,8 +22,8 @@
 #
 
 echo ----hSetup3ByHadoop.sh start---------------------------------------------------
-# /data/hadoop/hadoop-2.4.0/sbin/hadoop namenode -format
-# /data/hadoop/hadoop-2.4.0/sbin/start-all.sh
+# /data/hadoop/hadoop-2.7.1/sbin/hadoop namenode -format
+# /data/hadoop/hadoop-2.7.1/sbin/start-all.sh
 whoami
 if [ $1 = 'namenode' ];then
 	cd /data/hadoop/;hdfs namenode -format
@@ -34,7 +34,7 @@ if [ $1 = 'namenode' ];then
 	# ls >a.txt
 	# hadoop fs -copyFromLocal ./a.txt /test
 	# hadoop fs -ls /test
-	#hadoop jar /data/hadoop//share/hadoop/mapreduce/hadoop-mapreduce-examples-2.4.0.jar pi 10 10 
+	#hadoop jar /data/hadoop//share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 10 10 
 fi
 # http://s1:8088/
 # http://s1:50090/

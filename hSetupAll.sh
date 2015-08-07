@@ -34,8 +34,22 @@ export javaHome=`cat javaHome`
  hostCnt=$(grep -c ".*" ~/_setting/host)
 
 # shutdown firewall.
-chkconfig iptables off
-service iptables stop
+x=`cat /etc/redhat-release|sed -e 's/CentOS Linux release \([6,7]\)[\(\)\ \.0-9a-zA-Z]*/\1/g' `
+if [ $x -eq 7 ];then 
+    centOsVersion=7
+    y=`ps -ef |grep firewalld|grep -v grep`
+    if [ ${#y} -ne 0 ];then
+        systemctl disable firewalld
+    fi
+else
+    centOsVersion=6
+    y=`service iptables status|grep Chain`
+    if [ ${#y} -ne 0 ];then
+        chkconfig iptables off
+        service iptables stop
+    fi
+fi
+
 # make script access
 chmod 755 /root/
 chmod 755 /root/_setting
@@ -43,16 +57,20 @@ chmod 755 /root/_setting
 
 for i in `seq 2 $hostCnt`;do
 	# shutdown firewall.
-	sshpass -f ~/.ssh/pass ssh s$i chkconfig iptables off
-	sshpass -f ~/.ssh/pass ssh s$i service iptables stop
+    if [ centOsVersion = 7 ]; then
+        sshpass -f ~/.ssh/pass ssh s$i systemctl disable firewalld
+    elif [ centOsVersion = 6 ]; then
+    	sshpass -f ~/.ssh/pass ssh s$i chkconfig iptables off
+    	sshpass -f ~/.ssh/pass ssh s$i service iptables stop
+    fi    
 	# make script access
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/_setting
- 	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-2.4.0.tar.gz
- 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-2.4.0.tar.gz`
+ 	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-2.7.1.tar.gz
+ 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-2.7.1.tar.gz`
  	if [ ${#x} -eq 0 ];then 
- 		echo coping hadoop-2.4.0.tar.gz 
- 		sshpass -f ~/.ssh/pass scp /root/hadoop-2.4.0.tar.gz          s$i:/root
+ 		echo coping hadoop-2.7.1.tar.gz 
+ 		sshpass -f ~/.ssh/pass scp /root/hadoop-2.7.1.tar.gz          s$i:/root
  	fi
  	sshpass -f ~/.ssh/pass scp /root/_setting/*    s$i:/root/_setting/
  	sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/hSetup1ByRoot.sh $i
