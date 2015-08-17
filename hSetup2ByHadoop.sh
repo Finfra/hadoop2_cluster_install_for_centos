@@ -152,7 +152,7 @@ EOF
  #   <final>true</final>
  # </property>
 if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/masters ];then
-	rm /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
+  rm /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
 fi
 touch /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
 cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/masters<<EOF
@@ -160,16 +160,16 @@ s1
 EOF
 
 if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves ];then
-	rm /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
+  rm /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 fi
 touch /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 hostCnt=$(grep -c ".*" /root/_setting/host)
 for i in `seq 1 $hostCnt`
 do
-	x=`cat /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves|grep s$i`
-	if [ ${#x} -eq 0 ] ;then 
-		echo "s$i">>/data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
-	fi
+  x=`cat /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves|grep s$i`
+  if [ ${#x} -eq 0 ] ;then 
+    echo "s$i">>/data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
+  fi
 done
 
 if [ ! -d /data/hadoop/mapred/local ];then     

@@ -22,8 +22,7 @@
 #
 
 x=`rpm -qa|grep sshpass`
-if [ ${#x} -eq 0 ] 
-then 
+if [ ${#x} -eq 0 ] ; then 
 	wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el3.rf.x86_64.rpm
 	rpm -Uvh sshpass-1.05-1.el3.rf.x86_64.rpm
 	rm -f sshpass-1.05-1.el3.rf.x86_64.rpm
@@ -33,6 +32,7 @@ then
 	echo '.ssh exist'
 else
 	mkdir ~/.ssh/
+	chmod 700 ~/.ssh/
 fi
 if [ 'root' = `whoami` ]; then
 	echo #################################
