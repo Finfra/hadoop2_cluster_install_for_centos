@@ -21,10 +21,7 @@
 # THE SOFTWARE.
 #
 echo --hSetup1Root.sh Start-----------------------------------------------------
-x=`rpm -qa|grep java-1.7.0`
-if [ ${#x} -eq 0 ];then 
-	yum -y install  java-1.7
-fi
+
 
 #네임노드만 하둡 설치 받음.
 if [ $1 = 'namenode' ];then

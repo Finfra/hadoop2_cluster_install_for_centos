@@ -23,7 +23,13 @@
 
 echo "########################################################################"
 echo "########################################################################"
-. ~/_setting/doAll.sh
+# . ~/_setting/doAll.sh
+
+x=`rpm -qa|grep java-1.7.0`
+if [ ${#x} -eq 0 ];then 
+    yum -y install  java-1.7
+fi
+
 x=`ls -als \`which /usr/bin/java\`|awk '{print $NF}'`
 y=`ls -als $x|awk '{print $NF}'`
 #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64

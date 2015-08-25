@@ -21,12 +21,10 @@
 # THE SOFTWARE.
 #
 i=1
-for aip in `cat ~/_setting/host`
-do
+for aip in `cat ~/_setting/host`; do
 #	echo $aip
 	x=`cat /etc/hosts|grep $aip|grep s$i`
-	if [ ${#x} -eq 0 ] 
-	then 
+	if [ ${#x} -eq 0 ] ;then 
 		echo "$aip s$i">>/etc/hosts
 	fi
 	let i+=1
