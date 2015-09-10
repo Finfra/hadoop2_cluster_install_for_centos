@@ -35,9 +35,9 @@ y=`ls -als $x|awk '{print $NF}'`
 #/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64
 z=${y/\/bin\/java/}
 z1=${z/\/jre/}
-echo $z1>javaHome
+echo $z1>/root/_setting/javaHome
 
-export javaHome=`cat javaHome`
+export javaHome=`cat /root/_setting/javaHome`
  cd /root/_setting
  #Set Variable
  hostCnt=$(grep -c ".*" ~/_setting/host)
