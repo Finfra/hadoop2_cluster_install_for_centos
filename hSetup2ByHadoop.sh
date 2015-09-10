@@ -81,7 +81,22 @@ cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml<<EOF
     <name>mapreduce.jobtracker.address</name>
     <value>s1:8021</value>
   </property>
-  
+    <property>
+        <name>mapreduce.job.ubertask.enable</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>mapreduce.job.ubertask.maxbytes</name>
+        <value>4096</value>
+    </property>
+     <property>
+        <name>mapreduce.job.ubertask.maxmaps</name>
+        <value>1024</value>
+    </property>
+    <property>
+        <name>mapreduce.job.ubertask.maxreduces</name>
+        <value>1024</value>
+    </property> 
 </configuration>
 EOF
 # <property>
