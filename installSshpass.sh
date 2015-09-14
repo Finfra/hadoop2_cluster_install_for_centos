@@ -27,8 +27,7 @@ if [ ${#x} -eq 0 ] ; then
 	rpm -Uvh sshpass-1.05-1.el3.rf.x86_64.rpm
 	rm -f sshpass-1.05-1.el3.rf.x86_64.rpm
 fi
-if [ -d ~/.ssh/ ]
-then
+if [ -d ~/.ssh/ ];then
 	echo '.ssh exist'
 else
 	mkdir ~/.ssh/

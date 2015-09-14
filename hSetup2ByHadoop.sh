@@ -49,7 +49,7 @@ cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml<<EOF
  </property>
    <property>
     <name>hadoop.tmp.dir</name>
-    <value>/tmp/hadoop2.4</value>
+    <value>/tmp/hadoop2.7</value>
   </property>
 </configuration>
 EOF
@@ -164,8 +164,7 @@ if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves ];then
 fi
 touch /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
 hostCnt=$(grep -c ".*" /root/_setting/host)
-for i in `seq 1 $hostCnt`
-do
+for i in `seq 1 $hostCnt`;do
   x=`cat /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves|grep s$i`
   if [ ${#x} -eq 0 ] ;then 
     echo "s$i">>/data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
