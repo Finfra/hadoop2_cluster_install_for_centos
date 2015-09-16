@@ -11,6 +11,7 @@ v1.0.4
 ##step1. Preinstall and check yum update for all node
     # yum -y install wget
     # yum -y install  net-tools
+    # yum -y install  unzip    
     # yum -y update : yum -y update && yum -y upgrade
     # reboot
 ##step2. download 
