@@ -32,7 +32,6 @@ fi
 
 x=`ls -als \`which /usr/bin/java\`|awk '{print $NF}'`
 y=`ls -als $x|awk '{print $NF}'`
-#/usr/lib/jvm/java-1.7.0-openjdk-1.7.0.55.x86_64
 z=${y/\/bin\/java/}
 z1=${z/\/jre/}
 echo $z1>/root/_setting/javaHome
@@ -49,6 +48,7 @@ if [ $x -eq 7 ];then
     y=`ps -ef |grep firewalld|grep -v grep`
     if [ ${#y} -ne 0 ];then
         systemctl disable firewalld
+        systemctl stop firewalld
     fi
 else
     centOsVersion=6

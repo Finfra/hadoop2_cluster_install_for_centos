@@ -44,9 +44,9 @@ x=`ps -ef | grep hadoop | grep -v grep`
 if [ ${#x} -gt 0 ];then 
 	ps -ef | grep hadoop | grep -v grep | awk '{print $2}'|xargs kill -9 
 fi
-
 userdel -r hadoop
 useradd hadoop
+
 cat ~/_setting/password|passwd --stdin hadoop >/tmp/null
 x=`cat ~hadoop/.bashrc|grep HADOOP_PREFIX`
 #echo -1---------------------------$javaHome

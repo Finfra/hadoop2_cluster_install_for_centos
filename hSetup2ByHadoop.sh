@@ -53,6 +53,31 @@ cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml<<EOF
   </property>
 </configuration>
 EOF
+cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/mapred-site.xml<<EOF
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+ <property>
+   <name>mapreduce.framework.name</name>
+   <value>yarn</value>
+ </property>
+</configuration>
+EOF
+ #  <property>
+ #   <name>mapred.child.java.opts</name>
+ #   <value>-Xmx400m</value>
+ # </property>
+ # <property>
+ #   <name>mapred.system.dir</name>
+ #   <value>file:/data/hadoop/mapred/system</value>
+ #   <final>true</final>
+ # </property>
+ # <property>
+ #   <name>mapred.local.dir</name>
+ #   <value>file:/data/hadoop/mapred/local</value>
+ #   <final>true</final>
+ # </property>
+ 
 cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
@@ -142,30 +167,7 @@ EOF
 #</property>
 
 
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/mapred-site.xml<<EOF
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
-<configuration>
- <property>
-   <name>mapreduce.framework.name</name>
-   <value>yarn</value>
- </property>
-</configuration>
-EOF
- #  <property>
- #   <name>mapred.child.java.opts</name>
- #   <value>-Xmx400m</value>
- # </property>
- # <property>
- #   <name>mapred.system.dir</name>
- #   <value>file:/data/hadoop/mapred/system</value>
- #   <final>true</final>
- # </property>
- # <property>
- #   <name>mapred.local.dir</name>
- #   <value>file:/data/hadoop/mapred/local</value>
- #   <final>true</final>
- # </property>
+
 if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/masters ];then
   rm /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
 fi
