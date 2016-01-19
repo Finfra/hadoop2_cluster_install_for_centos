@@ -34,7 +34,7 @@ if [ $1 = 'namenode' ];then
 	# ls >a.txt
 	# hadoop fs -copyFromLocal ./a.txt /test
 	# hadoop fs -ls /test
-	#hadoop jar /data/hadoop//share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 10 10 
+	#hadoop jar /data/hadoop/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 10 10 
 fi
 # http://s1:8088/
 # http://s1:50090/
