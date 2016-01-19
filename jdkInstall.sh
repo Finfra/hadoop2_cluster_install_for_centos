@@ -36,3 +36,4 @@ if [ ${#x} -eq 0 ]; then
     echo export JAVA_HOME=`cat /root/_setting/javaHome`>>/etc/profile
 fi
 export JAVA_HOME=`cat /root/_setting/javaHome`
+echo 1|alternatives --config java 
