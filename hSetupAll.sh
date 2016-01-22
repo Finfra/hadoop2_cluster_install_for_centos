@@ -23,14 +23,12 @@
 
 echo "########################################################################"
 echo "########################################################################"
-. ~/_setting/doAll.sh
+#. ~/_setting_h2/doAll.sh
 
 
 # hadoop version
+hadoopVersion=`cat /root/_setting_h2/hadoopVersion`
 
-if [ ${#hadoopVersion} -eq 0 ];then
-        hadoopVersion=`cat /root/_setting/hadoopVersion`
-fi
 # Java setting
 x=`rpm -qa|grep java-1.7`
 if [ ${#x} -eq 0 ];then
@@ -41,12 +39,12 @@ x=`ls -als \`which /usr/bin/java\`|awk '{print $NF}'`
 y=`ls -als $x|awk '{print $NF}'`
 z=${y/\/bin\/java/}
 z1=${z/\/jre/}
-echo $z1>/root/_setting/javaHome
+echo $z1>/root/_setting_h2/javaHome
 
-export javaHome=`cat /root/_setting/javaHome`
- cd /root/_setting
+export javaHome=`cat /root/_setting_h2/javaHome`
+ cd /root/_setting_h2
  #Set Variable
- hostCnt=$(grep -c ".*" ~/_setting/host)
+ hostCnt=$(grep -c ".*" ~/_setting_h2/host)
 
 # shutdown firewall.
 x=`cat /etc/redhat-release|sed -e 's/CentOS Linux release \([6,7]\)[\(\)\ \.0-9a-zA-Z]*/\1/g' `
@@ -68,7 +66,7 @@ fi
 
 # make script access
 chmod 755 /root/
-chmod 755 /root/_setting
+chmod 755 /root/_setting_h2
 . hSetup1ByRoot.sh namenode
 
 for i in `seq 2 $hostCnt`;do
@@ -81,31 +79,32 @@ for i in `seq 2 $hostCnt`;do
     fi
 	# make script access
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/
- 	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/_setting
+    sshpass -f ~/.ssh/pass ssh s$i "if [ ! -d /root/_setting_h2 ];then mkdir /root/_setting_h2; fi"
+ 	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/_setting_h2
  	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-$hadoopVersion.tar.gz
  	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-$hadoopVersion.tar.gz`
  	if [ ${#x} -eq 0 ];then
  		echo coping hadoop-$hadoopVersion.tar.gz
  		sshpass -f ~/.ssh/pass scp /root/hadoop-$hadoopVersion.tar.gz          s$i:/root
  	fi
- 	sshpass -f ~/.ssh/pass scp /root/_setting/*    s$i:/root/_setting/
- 	sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/hSetup1ByRoot.sh $i
+ 	sshpass -f ~/.ssh/pass scp /root/_setting_h2/*    s$i:/root/_setting_h2/
+ 	sshpass -f ~/.ssh/pass ssh s$i . ~/_setting_h2/hSetup1ByRoot.sh $i
 done
 
 
 
 
-cp -r /root/_setting /home/hadoop/_setting
-chown -R  hadoop /home/hadoop/_setting
+cp -r /root/_setting_h2 /home/hadoop/_setting_h2
+chown -R  hadoop /home/hadoop/_setting_h2
 
 cat ~/.ssh/pass > /home/hadoop/.ssh/pass
 chown hadoop /home/hadoop/.ssh/pass
-sshpass -f ~/.ssh/pass ssh hadoop@s1 . /home/hadoop/_setting/doAll.sh
+sshpass -f ~/.ssh/pass ssh hadoop@s1 . /home/hadoop/_setting_h2/doAll.sh
 
 
 for i in `seq 2 $hostCnt`;do
-	sshpass -f ~/.ssh/pass ssh hadoop@s$i  /root/_setting/hSetup3ByHadoop.sh $i
+	sshpass -f ~/.ssh/pass ssh hadoop@s$i  /root/_setting_h2/hSetup3ByHadoop.sh $i
 done
-sshpass -f ~/.ssh/pass ssh hadoop@s1  /root/_setting/hSetup3ByHadoop.sh  'namenode'
+sshpass -f ~/.ssh/pass ssh hadoop@s1  /root/_setting_h2/hSetup3ByHadoop.sh  'namenode'
 echo "########################################################################"
 echo "########################################################################"

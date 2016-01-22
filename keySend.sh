@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
+echo ---- keySend.sh start -----------------------------------------------
+
 if [ -e ~/.ssh/id_rsa ] ;then
         rm -f ~/.ssh/id_rsa
 fi
@@ -27,18 +29,23 @@ if [ -e ~/.ssh/id_rsa.pub ]     ;then
         rm -f ~/.ssh/id_rsa.pub
 fi
 ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ''
-x=`cat ~/.ssh/config|grep \^StrictHostKeyChecking`
-if [ ${#x} -eq 0 ] ;then 
+if [ -f ~/.ssh/config ]; then
+    x=`cat ~/.ssh/config|grep \^StrictHostKeyChecking`
+fi
+if [ ${#x} -eq 0 ] ;then
         echo "StrictHostKeyChecking no">>~/.ssh/config
         chmod 600 ~/.ssh/config
 fi
-hostCnt=$(grep -c ".*" /root/_setting/host)
+hostCnt=$(grep -c ".*" /root/_setting_h2/host)
 for i in `seq 1 $hostCnt`;do
+        x=`sshpass -f ~/.ssh/pass ssh -q s$i ls -als|grep .ssh`
+        if [ ${#x} -eq 0 ];then
+            sshpass -f ~/.ssh/pass ssh -q s$i mkdir ~/.ssh;chmod 700 ~/.ssh
+        fi
         sshpass -f ~/.ssh/pass scp -q ~/.ssh/id_rsa.pub s$i:tmp
-        sshpass -f ~/.ssh/pass ssh -q s$i touch ~/.ssh/authorized_keys 
+        sshpass -f ~/.ssh/pass ssh -q s$i touch ~/.ssh/authorized_keys
         sshpass -f ~/.ssh/pass ssh -q s$i 'cat tmp>>  ~/.ssh/authorized_keys'
-        sshpass -f ~/.ssh/pass ssh -q s$i chmod 600 ~/.ssh/authorized_keys 
+        sshpass -f ~/.ssh/pass ssh -q s$i chmod 600 ~/.ssh/authorized_keys
         ssh s$i 'cat /etc/sysconfig/network|grep HOSTNAME'
 done
-
-
+echo ---- keySend.sh end -------------------------------------------------

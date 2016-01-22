@@ -20,31 +20,23 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
-
+echo ---- installSshpass.sh start ----------------------------------------
 x=`rpm -qa|grep sshpass`
-if [ ${#x} -eq 0 ] ; then 
+if [ ${#x} -eq 0 ] ; then
 	wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el3.rf.x86_64.rpm
 	rpm -Uvh sshpass-1.05-1.el3.rf.x86_64.rpm
 	rm -f sshpass-1.05-1.el3.rf.x86_64.rpm
 fi
 if [ -d ~/.ssh/ ];then
-	echo '.ssh exist'
+	echo # '.ssh exist'
 else
 	mkdir ~/.ssh/
 	chmod 700 ~/.ssh/
 fi
 if [ 'root' = `whoami` ]; then
-	echo #################################
-	echo #################################
-	echo #################################
-	echo #################################
-	echo #################################
-	#do extra job.
-    cat ~/_setting/password>~/.ssh/pass
+    cat ~/_setting_h2/password>~/.ssh/pass
 else
-	#do extra job.
-	cat ~/_setting/password>~/.ssh/pass	
+	cat ~/_setting_h2/password>~/.ssh/pass
 fi
 
-
-
+echo ---- installSshpass.sh end ------------------------------------------

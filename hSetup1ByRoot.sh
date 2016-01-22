@@ -23,14 +23,15 @@
 echo --hSetup1Root.sh Start-----------------------------------------------------
 
 if [ ${#hadoopVersion} -eq 0 ];then
-        hadoopVersion=`cat /root/_setting/hadoopVersion`
+        hadoopVersion=`cat /root/_setting_h2/hadoopVersion`
 fi
 
 #네임노드만 하둡 설치 받음.
 if [ $1 = 'namenode' ];then
 	if [ ! -e /root/hadoop-$hadoopVersion.tar.gz_org ]	;	then
+		echo wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
 		wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
-		mv /root/_setting/hadoop-$hadoopVersion.tar.gz /root/
+		mv /root/_setting_h2/hadoop-$hadoopVersion.tar.gz /root/
 		cp -f /root/hadoop-$hadoopVersion.tar.gz /root/hadoop-$hadoopVersion.tar.gz_org
 	else
 		if [ ! -e /root/hadoop-$hadoopVersion.tar.gz ]	;	then
@@ -44,12 +45,15 @@ x=`ps -ef | grep hadoop | grep -v grep`
 if [ ${#x} -gt 0 ];then
 	ps -ef | grep hadoop | grep -v grep | awk '{print $2}'|xargs kill -9
 fi
-userdel -r hadoop
+
+x=`cat /etc/shadow|grep '^hadoop:'|awk 'BEGIN{FS=":"}{print $1}'`
+if [ ${#x} -ne 0 ]; then
+    userdel -r hadoop
+fi
 useradd hadoop
 
-cat ~/_setting/password|passwd --stdin hadoop >/tmp/null
+cat ~/_setting_h2/password|passwd --stdin hadoop >/tmp/null
 x=`cat ~hadoop/.bashrc|grep HADOOP_PREFIX`
-#echo -1---------------------------$javaHome
 if [[ ${#x} -eq 0 ]]; then
 	echo "# Hadoop"                                         >>~hadoop/.bashrc
 	echo 'export HADOOP_PREFIX="/data/hadoop/hadoop-'$hadoopVersion'"' >>~hadoop/.bashrc
@@ -59,12 +63,12 @@ if [[ ${#x} -eq 0 ]]; then
 	echo "export HADOOP_COMMON_HOME=\${HADOOP_PREFIX}"      >>~hadoop/.bashrc
 	echo "export HADOOP_HDFS_HOME=\${HADOOP_PREFIX}"        >>~hadoop/.bashrc
 	echo "export YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc
-	echo "export HADOOP_YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc
-	echo "export PATH=\${PATH}:${HADOOP_PREFIX}/bin"        >>~hadoop/.bashrc
-	echo "export JAVA_HOME=$javaHome"                       >>~hadoop/.bashrc
+	echo "export HADOOP_YARN_HOME=\${HADOOP_PREFIX}"        >>~hadoop/.bashrc
+	echo "export PATH=\${PATH}:\${HADOOP_PREFIX}/bin"       >>~hadoop/.bashrc
+	echo "export JAVA_HOMEx=$javaHome"                      >>~hadoop/.bashrc
 fi
 
-. ~/_setting/jdkSettingAll.sh
+. ~/_setting_h2/jdkSettingAll.sh
 
 rm -rf /home/hadoop/.ssh
 su -  hadoop --command="ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ''"
@@ -83,13 +87,13 @@ tar -xf /root/hadoop-$hadoopVersion.tar.gz -C /root
 mv /root/hadoop-$hadoopVersion /data/hadoop/
 chown -R hadoop:hadoop /data/hadoop/
 chmod 755 /root
-chmod -R 755 /root/_setting
+chmod -R 755 /root/_setting_h2
 if [ $1 = 'namenode' ];then
 	echo '---------   namenode '$1
-	sshpass -f ~/.ssh/pass ssh hadoop@s1 . /root/_setting/hSetup2ByHadoop.sh namenode
+	sshpass -f ~/.ssh/pass ssh hadoop@s1 . /root/_setting_h2/hSetup2ByHadoop.sh namenode
 else
 	echo '---------not namenode '$1
-	sshpass -f ~/.ssh/pass ssh hadoop@s$1 . /root/_setting/hSetup2ByHadoop.sh $1
+	sshpass -f ~/.ssh/pass ssh hadoop@s$1 . /root/_setting_h2/hSetup2ByHadoop.sh $1
 fi
 
 

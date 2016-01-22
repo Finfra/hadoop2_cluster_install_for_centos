@@ -21,27 +21,25 @@
 # THE SOFTWARE.
 #
 
-echo ----claerAll.sh start---------------------------------------------------
-hostCnt=$(grep -c ".*" ~/_setting/host)
+echo ---- claerAll.sh start-----------------------------------------------
+hostCnt=$(grep -c ".*" ~/_setting_h2/host)
 for i in `seq 1 $hostCnt`;do
-	if [ $i -ne 1 ]
-	then	
-		f=`sshpass -f ~/.ssh/pass ssh s$i 'ls |grep _setting'`
-		if [ ${#f} -ne 0 ]; then
-        	sshpass -f ~/.ssh/pass ssh s$i 'rm -rf ~/_setting'
+    if [ $i -ne 1 ];then
+        f=`sshpass -f ~/.ssh/pass ssh -q s$i 'ls -als |grep _setting_h2'`
+        if [ ${#f} -ne 0 ]; then
+            sshpass -f ~/.ssh/pass ssh -q s$i 'rm -rf ~/_setting_h2'
         fi
-	fi
-	if [ 'root' = `whoami` ]; then
-		f=`sshpass -f ~/.ssh/pass ssh s$i 'ls .ssh|grep authorized_keys'`
-		if [ ${#f} -ne 0 ]; then
-			sshpass -f ~/.ssh/pass ssh s$i 'rm ~/.ssh/authorized_keys'
-		fi
-	    
-	else
-		f=`sshpass -f ~/.ssh/pass ssh s$i 'ls ~/.ssh|grep authorized_keys'`
-		if [ ${#f} -ne 0 ]; then
-			sshpass -f ~/.ssh/pass ssh s$i 'rm ~/.ssh/authorized_keys'
-		fi
-	fi
-done
-echo ----claerAll.sh end---------------------------------------------------
+    fi
+    if [ 'root' = `whoami` ]; then
+        f=`sshpass -f ~/.ssh/pass ssh -q s$i 'ls ~/.ssh|grep authorized_keys'`
+        if [ ${#f} -ne 0 ]; then
+            sshpass -f ~/.ssh/pass ssh -q s$i 'rm ~/.ssh/authorized_keys'
+        fi
+    else
+        f=`sshpass -f ~/.ssh/pass ssh -q s$i 'ls ~/.ssh|grep authorized_keys'`
+        if [ ${#f} -ne 0 ]; then
+            sshpass -f ~/.ssh/pass ssh -q s$i 'rm ~/.ssh/authorized_keys'
+        fi
+    fi
+ done
+echo ---- claerAll.sh end-------------------------------------------------

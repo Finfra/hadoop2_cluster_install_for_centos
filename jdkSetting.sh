@@ -23,6 +23,6 @@
 x=`cat ~/.bash_profile |grep JAVA_HOME`
 # Description
 if [ ${#x} -eq 0 ]; then
-	echo export JAVA_HOME=`cat /root/_setting/javaHome`>>~/.bashrc
+	echo export JAVA_HOME=`cat /root/_setting_h2/javaHome`>>~/.bashrc
 fi
 . ~/.bashrc

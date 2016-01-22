@@ -23,7 +23,7 @@
 
 echo ----hSetup2Hadoop.sh start---------------------------------------------------
 if [ ${#hadoopVersion} -eq 0 ];then
-        hadoopVersion=`cat /root/_setting/hadoopVersion`
+        hadoopVersion=`cat /root/_setting_h2/hadoopVersion`
 fi
 
 
@@ -33,8 +33,7 @@ rm -rf /data/hadoop/dfs/data
 rm -rf /data/hadoop/dfs/mapred
 
 . .bashrc
-javaHome=`cat /root/_setting/javaHome`
-echo $javaHome
+javaHome=`cat /root/_setting_h2/javaHome`
 echo "export JAVA_HOME="$javaHome>>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
 echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
 echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
@@ -184,7 +183,7 @@ if [ -f /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves ];then
   rm /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves
 fi
 touch /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves
-hostCnt=$(grep -c ".*" /root/_setting/host)
+hostCnt=$(grep -c ".*" /root/_setting_h2/host)
 for i in `seq 1 $hostCnt`;do
   x=`cat /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves|grep s$i`
   if [ ${#x} -eq 0 ] ;then

@@ -20,6 +20,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 #
-. ~/_setting/jdkInstall.sh
-. ~/_setting/jdkSetting.sh
-. ~/_setting/jdkSettingUser.sh hadoop
+. ~/_setting_h2/jdkInstall.sh
+. ~/_setting_h2/jdkSetting.sh
+. ~/_setting_h2/jdkSettingUser.sh hadoop

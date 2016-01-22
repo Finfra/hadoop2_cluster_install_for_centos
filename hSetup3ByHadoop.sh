@@ -28,7 +28,7 @@ echo ----hSetup3ByHadoop.sh start-----------------------------------------------
 
 if [ $1 = 'namenode' ];then
     if [ ${#hadoopVersion} -eq 0 ];then
-            hadoopVersion=`cat /root/_setting/hadoopVersion`
+            hadoopVersion=`cat /root/_setting_h2/hadoopVersion`
     fi
 	cd /data/hadoop/;hdfs namenode -format
 	start-all.sh

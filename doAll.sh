@@ -21,33 +21,29 @@
 # THE SOFTWARE.
 #
 
-echo ----doAll.sh start---------------------------------------------------
-cd ~/_setting
+echo "## doAll.sh start ###################################################"
+cd ~/_setting_h2
 #Set Variable
 hostCnt=$(grep -c ".*" host)
-
 if [ 'root' = `whoami` ]; then
-         . ~/_setting/setHost.sh
+         . ~/_setting_h2/setHost.sh
 fi
+. ~/_setting_h2/installSshpass.sh
+. ~/_setting_h2/clearAll.sh
+. ~/_setting_h2/keySend.sh
 
-. ~/_setting/installSshpass.sh
-. ~/_setting/clearAll.sh
-
-
-. ~/_setting/keySend.sh
 for i in `seq 2 $hostCnt`; do
-        echo `whoami`
-    
-        sshpass -f ~/.ssh/pass ssh s$i mkdir ~/_setting
-        sshpass -f ~/.ssh/pass scp ~/_setting/*  s$i:~/_setting/
-        
-        sshpass -f ~/.ssh/pass scp ~/_setting/setHost.sh  s$i:~/_setting/
-        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/setHost.sh
-        
-        echo '########### installSshpass #####'
-        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/installSshpass.sh
-        echo '########### keySend #####'
-        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/keySend.sh
+        echo "### Setting started For Slaves(s$i) ##################################"
+
+        sshpass -f ~/.ssh/pass ssh s$i mkdir ~/_setting_h2
+        sshpass -f ~/.ssh/pass scp ~/_setting_h2/*  s$i:~/_setting_h2/
+
+        sshpass -f ~/.ssh/pass scp ~/_setting_h2/setHost.sh  s$i:~/_setting_h2/
+        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting_h2/setHost.sh
+
+        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting_h2/installSshpass.sh
+        sshpass -f ~/.ssh/pass ssh s$i . ~/_setting_h2/keySend.sh
+        echo "### Setting ended For Slaves(s$i) ####################################"
 done
 
-# echo ----doAll.sh stop---------------------------------------------------
+echo "## doAll.sh ended ####################################################"

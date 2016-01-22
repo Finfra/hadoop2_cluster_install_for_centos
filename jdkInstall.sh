@@ -33,9 +33,9 @@ if [ ${#x} -eq 0 ]; then
 fi
 x=`cat /etc/profile|grep JAVA_HOME|grep java-1.7.0`
 if [ ${#x} -eq 0 ]; then
-    echo export JAVA_HOME=`cat /root/_setting/javaHome`>>/etc/profile
+    echo export JAVA_HOME=`cat /root/_setting_h2/javaHome`>>/etc/profile
 fi
-export JAVA_HOME=`cat /root/_setting/javaHome`
+export JAVA_HOME=`cat /root/_setting_h2/javaHome`
 
 jn=`echo 1|alternatives --config java |grep java-1.7.0|awk 'BEGIN{FIELDWIDTHS = "3 4" }{print $2}'`
 echo $jn|alternatives --config java > /dev/null

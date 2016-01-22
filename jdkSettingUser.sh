@@ -27,7 +27,7 @@ if [ -e ~$1/jdkSetting.sh ]; then
 	rm -f ~$1/jdkSetting.sh
 fi
 whoami
-cp -rf ~/_setting/jdkSetting.sh /home/$1/
+cp -rf ~/_setting_h2/jdkSetting.sh /home/$1/
 chown $1 /home/$1/jdkSetting.sh
 su $1 --command="cd;. ~"$1"/jdkSetting.sh"
 rm  -f ~$1/jdkSetting.sh

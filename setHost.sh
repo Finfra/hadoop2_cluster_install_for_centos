@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 i=1
-for aip in `cat ~/_setting/host`; do
+for aip in `cat ~/_setting_h2/host`; do
 #	echo $aip
 	x=`cat /etc/hosts|grep $aip|grep s$i`
 	if [ ${#x} -eq 0 ] ;then 
