@@ -65,7 +65,7 @@ if [[ ${#x} -eq 0 ]]; then
 	echo "export YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc
 	echo "export HADOOP_YARN_HOME=\${HADOOP_PREFIX}"        >>~hadoop/.bashrc
 	echo "export PATH=\${PATH}:\${HADOOP_PREFIX}/bin"       >>~hadoop/.bashrc
-	echo "export JAVA_HOMEx=$javaHome"                      >>~hadoop/.bashrc
+	echo "export JAVA_HOME=$javaHome"                      >>~hadoop/.bashrc
 fi
 
 . ~/_setting_h2/jdkSettingAll.sh
