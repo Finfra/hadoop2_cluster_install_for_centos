@@ -22,27 +22,27 @@
 #
 echo --hSetup1Root.sh Start-----------------------------------------------------
 
+if [ ${#hadoopVersion} -eq 0 ];then
+        hadoopVersion=`cat /root/_setting/hadoopVersion`
+fi
 
 #네임노드만 하둡 설치 받음.
 if [ $1 = 'namenode' ];then
-	if [ ! -e /root/hadoop-2.7.1.tar.gz_org ]	;	then
-		wget http://mirror.apache-kr.org/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz
-		mv /root/_setting/hadoop-2.7.1.tar.gz /root/
-		cp -f /root/hadoop-2.7.1.tar.gz /root/hadoop-2.7.1.tar.gz_org 
+	if [ ! -e /root/hadoop-$hadoopVersion.tar.gz_org ]	;	then
+		wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
+		mv /root/_setting/hadoop-$hadoopVersion.tar.gz /root/
+		cp -f /root/hadoop-$hadoopVersion.tar.gz /root/hadoop-$hadoopVersion.tar.gz_org
 	else
-		#echo 'adoop-2.4.1.tar.gz_org is exist.'
-		if [ ! -e /root/hadoop-2.7.1.tar.gz ]	;	then
-			cp -f /root/hadoop-2.7.1.tar.gz_org /root/hadoop-2.7.1.tar.gz
-		# else
-		# 	echo 'hadoop-2.7.1.tar.gz is exist.'
-		fi	
+		if [ ! -e /root/hadoop-$hadoopVersion.tar.gz ]	;	then
+			cp -f /root/hadoop-$hadoopVersion.tar.gz_org /root/hadoop-$hadoopVersion.tar.gz
+		fi
 	fi
 fi
 
 
 x=`ps -ef | grep hadoop | grep -v grep`
-if [ ${#x} -gt 0 ];then 
-	ps -ef | grep hadoop | grep -v grep | awk '{print $2}'|xargs kill -9 
+if [ ${#x} -gt 0 ];then
+	ps -ef | grep hadoop | grep -v grep | awk '{print $2}'|xargs kill -9
 fi
 userdel -r hadoop
 useradd hadoop
@@ -52,19 +52,19 @@ x=`cat ~hadoop/.bashrc|grep HADOOP_PREFIX`
 #echo -1---------------------------$javaHome
 if [[ ${#x} -eq 0 ]]; then
 	echo "# Hadoop"                                         >>~hadoop/.bashrc
-	echo 'export HADOOP_PREFIX="/data/hadoop/hadoop-2.7.1"' >>~hadoop/.bashrc                                               
-	echo "export PATH=\$PATH:\$HADOOP_PREFIX/bin"           >>~hadoop/.bashrc                                                 
-	echo "export PATH=\$PATH:\$HADOOP_PREFIX/sbin"          >>~hadoop/.bashrc                                                  
-	echo "export HADOOP_MAPRED_HOME=\${HADOOP_PREFIX}"      >>~hadoop/.bashrc                                                       
-	echo "export HADOOP_COMMON_HOME=\${HADOOP_PREFIX}"      >>~hadoop/.bashrc                                                       
-	echo "export HADOOP_HDFS_HOME=\${HADOOP_PREFIX}"        >>~hadoop/.bashrc                                                     
-	echo "export YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc                                              
-	echo "export HADOOP_YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc                                              
-	echo "export PATH=\${PATH}:${HADOOP_PREFIX}/bin"        >>~hadoop/.bashrc                                              
-	echo "export JAVA_HOME=$javaHome"                       >>~hadoop/.bashrc                                              
+	echo 'export HADOOP_PREFIX="/data/hadoop/hadoop-'$hadoopVersion'"' >>~hadoop/.bashrc
+	echo "export PATH=\$PATH:\$HADOOP_PREFIX/bin"           >>~hadoop/.bashrc
+	echo "export PATH=\$PATH:\$HADOOP_PREFIX/sbin"          >>~hadoop/.bashrc
+	echo "export HADOOP_MAPRED_HOME=\${HADOOP_PREFIX}"      >>~hadoop/.bashrc
+	echo "export HADOOP_COMMON_HOME=\${HADOOP_PREFIX}"      >>~hadoop/.bashrc
+	echo "export HADOOP_HDFS_HOME=\${HADOOP_PREFIX}"        >>~hadoop/.bashrc
+	echo "export YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc
+	echo "export HADOOP_YARN_HOME=\${HADOOP_PREFIX}"               >>~hadoop/.bashrc
+	echo "export PATH=\${PATH}:${HADOOP_PREFIX}/bin"        >>~hadoop/.bashrc
+	echo "export JAVA_HOME=$javaHome"                       >>~hadoop/.bashrc
 fi
 
-. ~/_setting/jdkSettingAll.sh 
+. ~/_setting/jdkSettingAll.sh
 
 rm -rf /home/hadoop/.ssh
 su -  hadoop --command="ssh-keygen -t rsa -q -f ~/.ssh/id_rsa -N ''"
@@ -79,8 +79,8 @@ rm -rf /data/hadoop
 mkdir -p /data/hadoop
 chmod 777 /data
 #echo -------------------------------------------------------
-tar -xf /root/hadoop-2.7.1.tar.gz -C /root
-mv /root/hadoop-2.7.1 /data/hadoop/
+tar -xf /root/hadoop-$hadoopVersion.tar.gz -C /root
+mv /root/hadoop-$hadoopVersion /data/hadoop/
 chown -R hadoop:hadoop /data/hadoop/
 chmod 755 /root
 chmod -R 755 /root/_setting

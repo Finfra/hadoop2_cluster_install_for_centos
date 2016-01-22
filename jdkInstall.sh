@@ -21,7 +21,7 @@
 # THE SOFTWARE.
 #
 x=`rpm -qa|grep java-1.7.0-openjdk-devel`
-if [ ${#x} -eq 0 ];then 
+if [ ${#x} -eq 0 ];then
 	yum -y install java-1.7.0
 	yum -y install java-1.7.0-openjdk-devel
 fi
@@ -36,4 +36,6 @@ if [ ${#x} -eq 0 ]; then
     echo export JAVA_HOME=`cat /root/_setting/javaHome`>>/etc/profile
 fi
 export JAVA_HOME=`cat /root/_setting/javaHome`
-echo 1|alternatives --config java 
+
+jn=`echo 1|alternatives --config java |grep java-1.7.0|awk 'BEGIN{FIELDWIDTHS = "3 4" }{print $2}'`
+echo $jn|alternatives --config java > /dev/null

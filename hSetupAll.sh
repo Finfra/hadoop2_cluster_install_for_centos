@@ -25,8 +25,15 @@ echo "########################################################################"
 echo "########################################################################"
 . ~/_setting/doAll.sh
 
+
+# hadoop version
+
+if [ ${#hadoopVersion} -eq 0 ];then
+        hadoopVersion=`cat /root/_setting/hadoopVersion`
+fi
+# Java setting
 x=`rpm -qa|grep java-1.7`
-if [ ${#x} -eq 0 ];then 
+if [ ${#x} -eq 0 ];then
     yum -y install  java-1.7
 fi
 
@@ -43,7 +50,7 @@ export javaHome=`cat /root/_setting/javaHome`
 
 # shutdown firewall.
 x=`cat /etc/redhat-release|sed -e 's/CentOS Linux release \([6,7]\)[\(\)\ \.0-9a-zA-Z]*/\1/g' `
-if [ $x -eq 7 ];then 
+if [ $x -eq 7 ];then
     centOsVersion=7
     y=`ps -ef |grep firewalld|grep -v grep`
     if [ ${#y} -ne 0 ];then
@@ -71,19 +78,19 @@ for i in `seq 2 $hostCnt`;do
     elif [ centOsVersion = 6 ]; then
     	sshpass -f ~/.ssh/pass ssh s$i chkconfig iptables off
     	sshpass -f ~/.ssh/pass ssh s$i service iptables stop
-    fi    
+    fi
 	# make script access
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/_setting
- 	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-2.7.1.tar.gz
- 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-2.7.1.tar.gz`
- 	if [ ${#x} -eq 0 ];then 
- 		echo coping hadoop-2.7.1.tar.gz 
- 		sshpass -f ~/.ssh/pass scp /root/hadoop-2.7.1.tar.gz          s$i:/root
+ 	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-$hadoopVersion.tar.gz
+ 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-$hadoopVersion.tar.gz`
+ 	if [ ${#x} -eq 0 ];then
+ 		echo coping hadoop-$hadoopVersion.tar.gz
+ 		sshpass -f ~/.ssh/pass scp /root/hadoop-$hadoopVersion.tar.gz          s$i:/root
  	fi
  	sshpass -f ~/.ssh/pass scp /root/_setting/*    s$i:/root/_setting/
  	sshpass -f ~/.ssh/pass ssh s$i . ~/_setting/hSetup1ByRoot.sh $i
-done 
+done
 
 
 
@@ -99,6 +106,6 @@ sshpass -f ~/.ssh/pass ssh hadoop@s1 . /home/hadoop/_setting/doAll.sh
 for i in `seq 2 $hostCnt`;do
 	sshpass -f ~/.ssh/pass ssh hadoop@s$i  /root/_setting/hSetup3ByHadoop.sh $i
 done
-sshpass -f ~/.ssh/pass ssh hadoop@s1  /root/_setting/hSetup3ByHadoop.sh  'namenode' 
+sshpass -f ~/.ssh/pass ssh hadoop@s1  /root/_setting/hSetup3ByHadoop.sh  'namenode'
 echo "########################################################################"
 echo "########################################################################"

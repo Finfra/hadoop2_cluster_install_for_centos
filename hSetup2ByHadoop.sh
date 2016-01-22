@@ -22,7 +22,11 @@
 #
 
 echo ----hSetup2Hadoop.sh start---------------------------------------------------
-## clear
+if [ ${#hadoopVersion} -eq 0 ];then
+        hadoopVersion=`cat /root/_setting/hadoopVersion`
+fi
+
+
 
 rm -rf /data/hadoop/dfs/name
 rm -rf /data/hadoop/dfs/data
@@ -31,14 +35,14 @@ rm -rf /data/hadoop/dfs/mapred
 . .bashrc
 javaHome=`cat /root/_setting/javaHome`
 echo $javaHome
-echo "export JAVA_HOME="$javaHome>>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
-echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
-echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.7.1/etc/hadoop/hadoop-env.sh
-echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-env.sh
-echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-env.sh
+echo "export JAVA_HOME="$javaHome>>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
+echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
+echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hadoop-env.sh
+echo "export HADOOP_COMMON_LIB_NATIVE_DIR=\${HADOOP_PREFIX}/lib/native">>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/yarn-env.sh
+echo 'export HADOOP_OPTS="-Djava.library.path=\$HADOOP_PREFIX/lib"'>>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/yarn-env.sh
 
 
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml<<EOF
+cat >/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/core-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -53,7 +57,7 @@ cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/core-site.xml<<EOF
   </property>
 </configuration>
 EOF
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/mapred-site.xml<<EOF
+cat >/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/mapred-site.xml<<EOF
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -77,8 +81,8 @@ EOF
  #   <value>file:/data/hadoop/mapred/local</value>
  #   <final>true</final>
  # </property>
- 
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml<<EOF
+
+cat >/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/yarn-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -121,7 +125,7 @@ cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/yarn-site.xml<<EOF
     <property>
         <name>mapreduce.job.ubertask.maxreduces</name>
         <value>1024</value>
-    </property> 
+    </property>
 </configuration>
 EOF
 # <property>
@@ -133,7 +137,7 @@ EOF
 #   <name>yarn.nodemanager.linux-container-executor.group</name>
 #   <value>hadoop</value>
 # </property>
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/hdfs-site.xml<<EOF
+cat >/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/hdfs-site.xml<<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
@@ -168,32 +172,32 @@ EOF
 
 
 
-if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/masters ];then
-  rm /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
+if [ -f /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/masters ];then
+  rm /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/masters
 fi
-touch /data/hadoop/hadoop-2.7.1/etc/hadoop/masters
-cat >/data/hadoop/hadoop-2.7.1/etc/hadoop/masters<<EOF
+touch /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/masters
+cat >/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/masters<<EOF
 s1
 EOF
 
-if [ -f /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves ];then
-  rm /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
+if [ -f /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves ];then
+  rm /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves
 fi
-touch /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
+touch /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves
 hostCnt=$(grep -c ".*" /root/_setting/host)
 for i in `seq 1 $hostCnt`;do
-  x=`cat /data/hadoop/hadoop-2.7.1/etc/hadoop/slaves|grep s$i`
-  if [ ${#x} -eq 0 ] ;then 
-    echo "s$i">>/data/hadoop/hadoop-2.7.1/etc/hadoop/slaves
+  x=`cat /data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves|grep s$i`
+  if [ ${#x} -eq 0 ] ;then
+    echo "s$i">>/data/hadoop/hadoop-$hadoopVersion/etc/hadoop/slaves
   fi
 done
 
-if [ ! -d /data/hadoop/mapred/local ];then     
-  mkdir -p /data/hadoop/mapred/local; 
+if [ ! -d /data/hadoop/mapred/local ];then
+  mkdir -p /data/hadoop/mapred/local;
 fi
 
-if [ ! -d /data/hadoop/mapred/system ];then     
-  mkdir -p /data/hadoop/mapred/system; 
+if [ ! -d /data/hadoop/mapred/system ];then
+  mkdir -p /data/hadoop/mapred/system;
 fi
 
 

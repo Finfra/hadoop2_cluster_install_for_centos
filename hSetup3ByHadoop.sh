@@ -22,10 +22,14 @@
 #
 
 echo ----hSetup3ByHadoop.sh start---------------------------------------------------
-# /data/hadoop/hadoop-2.7.1/sbin/hadoop namenode -format
-# /data/hadoop/hadoop-2.7.1/sbin/start-all.sh
-whoami
+# /data/hadoop/hadoop-$hadoopVersion/sbin/hadoop namenode -format
+# /data/hadoop/hadoop-$hadoopVersion/sbin/start-all.sh
+# whoami
+
 if [ $1 = 'namenode' ];then
+    if [ ${#hadoopVersion} -eq 0 ];then
+            hadoopVersion=`cat /root/_setting/hadoopVersion`
+    fi
 	cd /data/hadoop/;hdfs namenode -format
 	start-all.sh
 	hadoop fs -mkdir /test
@@ -34,7 +38,7 @@ if [ $1 = 'namenode' ];then
 	# ls >a.txt
 	# hadoop fs -copyFromLocal ./a.txt /test
 	# hadoop fs -ls /test
-	#hadoop jar /data/hadoop/hadoop-2.7.1/share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 10 10 
+	#hadoop jar /data/hadoop//share/hadoop/mapreduce/hadoop-mapreduce-examples-$hadoopVersion.jar pi 10 10
 fi
 # http://s1:8088/
 # http://s1:50090/

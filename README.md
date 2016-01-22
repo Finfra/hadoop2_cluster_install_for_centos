@@ -4,23 +4,26 @@ This is hadoop2 cluster installer for centos6.0 or centos7.1 .
 
 # Version
 
-v1.0.4
+v1.0.5
 
-# Intall hadoop2.7.1 with hadoop2_cluster_install_for_centos.
-##step0. 
+# Intall hadoop with hadoop2_cluster_install_for_centos.
+
+
+##step0.
 ##step1. Preinstall and check yum update for all node
     # yum -y install wget
     # yum -y install  net-tools
     # yum -y install  unzip    
     # yum -y update : yum -y update && yum -y upgrade
     # reboot
-##step2. download 
-    # cd 
+##step2. download
+    # cd
     # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
     # mv hadoop2_cluster_install_for_centos  _setting
 ##setp3. change setting file.
     # vi password      (All node's password will be equal.)
     # vi host          (Use ip addresses, not url or nostname.)
+    # vi hadoopVersion (default is 2.6)
 ##step4. run install script.
     # cd /root/_setting                         
     # .hSetupAll.sh
@@ -31,10 +34,11 @@ v1.0.4
 Found 1 items
 drwxr-xr-x   - hadoop supergroup          0 2015-03-08 18:14 /test
 ----hSetup3ByHadoop.sh end---------------------------------------------------
+
 ########################################################################
 ########################################################################
 # su - hadoo
-$ 
+$
 # Result
 ```
 
@@ -43,7 +47,7 @@ This is early version.
 Welcome our code.
 
 # BUGS
-    
+
 Please report bugs to nowage[at]gmail.com.
 
 # todo
