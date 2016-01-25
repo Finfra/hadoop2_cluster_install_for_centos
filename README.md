@@ -12,8 +12,8 @@ v1.0.5
 ##step0.
 ##step1. Preinstall and check yum update for all node
     # yum -y install wget
-    # yum -y install  net-tools
-    # yum -y install  unzip    
+    # yum -y install net-tools
+    # yum -y install unzip    
     # yum -y update : yum -y update && yum -y upgrade
     # reboot
 ##step2. download
@@ -24,9 +24,9 @@ v1.0.5
 ##setp3. change setting file.
     # vi password      (All node's password will be equal.)
     # vi host          (Use ip addresses, not url or nostname.)
-    # vi hadoopVersion (default is 2.6)
+    # vi hadoopVersion (default is 2.6.3)
 ##step4. run install script.
-    # cd /root/_setting_h2                         
+    # cd /root/_setting_h2
     # . hSetupAll.sh
 ##step5. check.
 ```
