@@ -19,7 +19,8 @@ v1.0.5
 ##step2. download
     # cd
     # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
-    # mv hadoop2_cluster_install_for_centos  _setting
+    # unzip master.zip
+    # mv hadoop2_cluster_install_for_centos-master  _setting
 ##setp3. change setting file.
     # vi password      (All node's password will be equal.)
     # vi host          (Use ip addresses, not url or nostname.)
