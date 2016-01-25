@@ -82,9 +82,9 @@ for i in `seq 2 $hostCnt`;do
     sshpass -f ~/.ssh/pass ssh s$i "if [ ! -d /root/_setting_h2 ];then mkdir /root/_setting_h2; fi"
  	sshpass -f ~/.ssh/pass ssh s$i chmod 755 /root/_setting_h2
  	sshpass -f ~/.ssh/pass ssh s$i ls /root/hadoop-$hadoopVersion.tar.gz
- 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-$hadoopVersion.tar.gz`
+ 	x=`sshpass -f ~/.ssh/pass ssh s$i ls /root/|grep hadoop-$hadoopVersion.tar.gz$`
  	if [ ${#x} -eq 0 ];then
- 		echo coping hadoop-$hadoopVersion.tar.gz
+ 		echo copying hadoop-$hadoopVersion.tar.gz
  		sshpass -f ~/.ssh/pass scp /root/hadoop-$hadoopVersion.tar.gz          s$i:/root
  	fi
  	sshpass -f ~/.ssh/pass scp /root/_setting_h2/*    s$i:/root/_setting_h2/

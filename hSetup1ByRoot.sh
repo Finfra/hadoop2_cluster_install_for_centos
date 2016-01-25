@@ -26,7 +26,7 @@ if [ ${#hadoopVersion} -eq 0 ];then
         hadoopVersion=`cat /root/_setting_h2/hadoopVersion`
 fi
 
-#네임노드만 하둡 설치 받음.
+#download hadoop file for namenode
 if [ $1 = 'namenode' ];then
 	if [ ! -e /root/hadoop-$hadoopVersion.tar.gz_org ]	;	then
 		echo wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
