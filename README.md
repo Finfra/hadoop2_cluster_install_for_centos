@@ -27,7 +27,7 @@ v1.0.5
     # vi hadoopVersion (default is 2.6)
 ##step4. run install script.
     # cd /root/_setting_h2                         
-    # .hSetupAll.sh
+    # . hSetupAll.sh
 ##step5. check.
 ```
 # .hSetupAll.sh
