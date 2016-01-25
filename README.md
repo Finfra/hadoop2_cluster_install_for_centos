@@ -26,7 +26,7 @@ v1.0.5
     # vi host          (Use ip addresses, not url or nostname.)
     # vi hadoopVersion (default is 2.6)
 ##step4. run install script.
-    # cd /root/_setting                         
+    # cd /root/_setting_h2                         
     # .hSetupAll.sh
 ##step5. check.
 ```
