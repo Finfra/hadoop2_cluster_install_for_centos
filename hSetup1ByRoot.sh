@@ -29,8 +29,8 @@ fi
 #download hadoop file for namenode
 if [ $1 = 'namenode' ];then
 	if [ ! -e /root/hadoop-$hadoopVersion.tar.gz_org ]	;	then
-		echo wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
-		wget http://mirror.apache-kr.org/hadoop/common/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
+		echo wget https://archive.apache.org/dist/hadoop/core/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
+		wget https://archive.apache.org/dist/hadoop/core/hadoop-$hadoopVersion/hadoop-$hadoopVersion.tar.gz
 		mv /root/_setting_h2/hadoop-$hadoopVersion.tar.gz /root/
 		cp -f /root/hadoop-$hadoopVersion.tar.gz /root/hadoop-$hadoopVersion.tar.gz_org
 	else
