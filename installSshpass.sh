@@ -23,10 +23,21 @@
 echo ---- installSshpass.sh start ----------------------------------------
 x=`rpm -qa|grep sshpass`
 if [ ${#x} -eq 0 ] ; then
-	wget http://pkgs.repoforge.org/sshpass/sshpass-1.05-1.el3.rf.x86_64.rpm
-	rpm -Uvh sshpass-1.05-1.el3.rf.x86_64.rpm
-	rm -f sshpass-1.05-1.el3.rf.x86_64.rpm
+    x=`ls /root/sshpass-1.05-5.el7.x86_64.rpm`
+    if [ ${#x} -ne 0 ] ; then
+        rpm -Uvh /root/sshpass-1.05-5.el7.x86_64.rpm
+    else
+        if [ $centOsVersion='7' ]; then
+            yum install -y epel-release
+            yum install -y sshpass
+        else
+        	wget http://dl.fedoraproject.org/pub/epel/7/x86_64/s/sshpass-1.05-5.el7.x86_64.rpm
+        	rpm -Uvh sshpass-1.05-5.el7.x86_64.rpm
+        	mv ./sshpass-1.05-5.el7.x86_64.rpm /root/
+        fi
+    fi
 fi
+
 if [ -d ~/.ssh/ ];then
 	echo # '.ssh exist'
 else
