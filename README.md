@@ -9,26 +9,26 @@ v1.0.5
 # Intall hadoop with hadoop2_cluster_install_for_centos.
 
 
-##step0.
-##step1. Preinstall and check yum update for all node
+## step0.
+## step1. Preinstall and check yum update for all node
     # yum -y install wget
     # yum -y install net-tools
     # yum -y install unzip    
     # yum -y update : yum -y update && yum -y upgrade
     # reboot
-##step2. download
+## step2. download
     # cd
     # wget https://github.com/Finfra/hadoop2_cluster_install_for_centos/archive/master.zip
     # unzip master.zip
     # mv hadoop2_cluster_install_for_centos-master  _setting_h2
-##setp3. change setting file.
+## setp3. change setting file.
     # vi password      (All node's password will be equal.)
     # vi host          (Use ip addresses, not url or nostname.)
     # vi hadoopVersion (default is 2.6.3)
-##step4. run install script.
+## step4. run install script.
     # cd /root/_setting_h2
     # . hSetupAll.sh
-##step5. check.
+## step5. check.
 ```
 # .hSetupAll.sh
             <<~ Omitted ~>>
