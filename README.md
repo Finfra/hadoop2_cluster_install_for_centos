@@ -1,4 +1,4 @@
-# hadoop2_cluster_install_for_centos - Introduction
+# hadoop2_cluster_install_for_centos -Introduction
 
 This is hadoop2 cluster installer for centos6.0 or centos7.1 .
 
